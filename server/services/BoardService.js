@@ -1,28 +1,44 @@
 import mongoose from "mongoose"
-import ListService from './ListService'
-const Schema = mongoose.Schema
-const ObjectId = Schema.Types.ObjectId
+import Board from "../models/Board"
+import ApiError from "../utils/ApiError"
 
-let _listRepo = new ListService().repository
+const _repository = mongoose.model('Board', Board)
 
-let _schema = new Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  authorId: { type: ObjectId, ref: 'User', required: true }
-}, { timestamps: true })
-
-//CASCADE ON DELETE
-// _schema.pre('findOneAndRemove', function (next) {
-//   //lets find all the lists and remove them
-//   Promise.all([
-//     _listRepo.deleteMany({ boardId: this._conditions._id })
-//   ])
-//     .then(() => next())
-//     .catch(err => next(err))
-// })
-
-export default class BoardService {
-  get repository() {
-    return mongoose.model('Board', _schema)
+class BoardService {
+  async getAll(userId) {
+    return await _repository.find({ authorId: userId })
   }
+
+  async getById(id, userId) {
+    let data = await _repository.findOne({ _id: id, authorId: userId })
+    if (!data) {
+      throw new ApiError("Invalid ID or you do not own this board", 400)
+    }
+    return data
+  }
+
+  async create(rawData) {
+    let data = await _repository.create(rawData)
+    return data
+  }
+
+  async edit(id, userId, update) {
+    let data = await _repository.findOneAndUpdate({ _id: id, authorId: userId }, update, { new: true })
+    if (!data) {
+      throw new ApiError("Invalid ID or you do not own this board", 400);
+    }
+    return data;
+  }
+
+  async delete(id, userId) {
+    let data = await _repository.findOneAndRemove({ _id: id, authorId: userId });
+    if (!data) {
+      throw new ApiError("Invalid ID or you do not own this board", 400);
+    }
+  }
+
 }
+
+
+const _boardService = new BoardService()
+export default _boardService

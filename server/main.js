@@ -29,10 +29,10 @@ server.use(bp.urlencoded({
 }))
 
 //REGISTER YOUR SESSION, OTHERWISE YOU WILL NEVER GET LOGGED IN
-import AuthController from './controllers/AuthController'
+import UserController from './controllers/UserController'
 import Session from "./middleware/session"
 server.use(new Session().express)
-server.use('/account', new AuthController().router)
+server.use('/account', new UserController().router)
 
 
 //YOUR ROUTES HERE!!!!!!
@@ -42,10 +42,10 @@ server.use('/api/boards', new BoardController().router)
 
 
 
-//Default Error Handler
+//NOTE Default error handler, catches all routes with an error attached
 server.use((error, req, res, next) => {
-  res.status(error.status || 400).send({ error: { message: error.message } })
-})
+  res.status(error.status || 400).send({ error: { message: error.message } });
+});
 
 //Catch all
 server.use('*', (req, res, next) => {

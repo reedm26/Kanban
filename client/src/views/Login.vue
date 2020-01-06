@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import router from "@/router.js";
+import router from "@/router/index.js";
 export default {
   name: "login",
   data() {
