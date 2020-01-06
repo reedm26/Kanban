@@ -1,10 +1,32 @@
 <template>
-  <div class="board">{{board.title}}</div>
+  <div class="board">
+    {{board.title}}
+    <form @submit.prevent="addList">
+      <input type="text" v-model="newList.title" />
+      <button>Add List</button>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
   name: "board",
+  data() {
+    return {
+      newList: {
+        title: ""
+      }
+    };
+  },
+  method: {
+    addList() {
+      let list = { ...this.newList };
+      this.$store.dispatch("addList", list);
+      this.newList = {
+        title: ""
+      };
+    }
+  },
   computed: {
     board() {
       return (
