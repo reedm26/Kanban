@@ -3,36 +3,34 @@ import Vuex from "vuex";
 import Axios from "axios";
 import router from "../router/index";
 import AuthService from "../AuthService";
+import boardModule from "./BoardModule";
+import listModule from "./ListModule";
+import taskModule from "./TaskModule";
+import commentModule from "./CommentModule";
 
 Vue.use(Vuex);
 
-//Allows axios to work locally or live
-let base = window.location.host.includes("localhost:8080")
-  ? "//localhost:3000/"
-  : "/";
-
-let api = Axios.create({
-  baseURL: base + "api/",
-  timeout: 3000,
-  withCredentials: true
-});
-
 export default new Vuex.Store({
+  modules: {
+    boardModule,
+    listModule,
+    taskModule,
+    commentModule
+  },
   state: {
     user: {},
     boards: [],
     activeBoard: {},
-    lists: []
+    lists: [],
+    tasks: [],
+    comments: []
   },
   mutations: {
+    setResource(state, payload) {
+      state[payload.resource] = payload.data;
+    },
     setUser(state, user) {
       state.user = user;
-    },
-    setBoards(state, boards) {
-      state.boards = boards;
-    },
-    setLists(state, lists) {
-      state.lists = lists;
     }
   },
   actions: {
@@ -65,34 +63,6 @@ export default new Vuex.Store({
       } catch (e) {
         console.warn(e.message);
       }
-    },
-    //#endregion
-
-    //#region -- BOARDS --
-    getBoards({ commit, dispatch }) {
-      api.get("boards").then(res => {
-        commit("setBoards", res.data);
-      });
-    },
-    addBoard({ commit, dispatch }, boardData) {
-      api.post("boards", boardData).then(serverBoard => {
-        dispatch("getBoards");
-      });
-    },
-    //#endregion
-
-    //#region -- LISTS --
-    addList({ commit, dispatch }, list) {
-      api.post("", list).then(list => {
-        dispatch("getLists");
-      });
-    },
-    getLists({ commit, dispatch }) {
-      api.get("lists").then(res => {
-        commit("setLists");
-      });
     }
-
-    //#endregion
   }
 });

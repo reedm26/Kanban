@@ -1,16 +1,29 @@
 <template>
-  <div class="board">
-    {{board.title}}
-    <form @submit.prevent="addList">
-      <input type="text" v-model="newList.title" />
-      <button>Add List</button>
-    </form>
+  <div class="board container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>{{board.title}}</h1>
+        <p>{{board.description}}</p>
+      </div>
+      <list />
+      <div class="col-12">
+        <form @submit.prevent="addList">
+          <input type="text" v-model="newList.title" />
+          <button>Add List</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import list from "@/components/List";
+
 export default {
   name: "board",
+  mounted() {
+    this.$store.dispatch("setActiveBoard", this.$route.params.boardId);
+  },
   data() {
     return {
       newList: {
@@ -29,13 +42,19 @@ export default {
   },
   computed: {
     board() {
+      console.log(this.$store.state.activeBoard);
       return (
-        //FIXME This does not work on page reload because the boards array is empty in the store
-        this.$store.state.boards.find(b => b._id == this.boardId) || {
+        this.$store.state.activeBoard || {
           title: "Loading..."
         }
       );
+    },
+    lists() {
+      return;
     }
+  },
+  components: {
+    list
   },
   props: ["boardId"]
 };
