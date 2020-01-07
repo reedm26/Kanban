@@ -42,7 +42,6 @@ class BoardService {
     if (!data) {
       throw new ApiError("Invalid ID or you do not own this board", 400);
     }
-    return data;
   }
 }
 
