@@ -12,20 +12,17 @@ let api = axios.create({
 
 export default {
   actions: {
-    getBoards({ commit, dispatch }) {
-      api.get("boards").then(res => {
-        commit("setResource", { resource: "boards", data: res.data });
-      });
+    async getBoards({ commit, dispatch }) {
+      let res = await api.get("boards");
+      commit("setResource", { resource: "boards", data: res.data });
     },
-    addBoard({ commit, dispatch }, boardData) {
-      api.post("boards", boardData).then(board => {
-        dispatch("getBoards");
-      });
+    async addBoard({ commit, dispatch }, board) {
+      let res = await api.post("boards", board);
+      dispatch("getBoards");
     },
-    setActiveBoard({ commit, dispatch }, id) {
-      api.get("boards/" + id).then(res => {
-        commit("setResource", { resource: "activeBoard", data: res.data });
-      });
+    async setActiveBoard({ commit, dispatch }, id) {
+      let res = await api.get("boards/" + id);
+      commit("setResource", { resource: "activeBoard", data: res.data });
     }
   }
 };

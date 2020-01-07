@@ -12,15 +12,14 @@ let api = axios.create({
 
 export default {
   actions: {
-    getLists({ commit, dispatch }) {
-      api.get("lists").then(res => {
-        commit("setResource", { resource: "lists", data: res.data });
-      });
+    async getLists({ commit, dispatch }, id) {
+      let res = await api.get("boards/" + id + "/lists");
+      commit("setResource", { resource: "lists", data: res.data });
     },
-    addList({ commit, dispatch }, list) {
-      api.post("lists", list).then(list => {
-        dispatch("getLists");
-      });
+    async addList({ commit, dispatch }, list) {
+      console.log(list);
+      let res = await api.post("lists", list);
+      dispatch("getLists", list.boardId);
     }
   }
 };

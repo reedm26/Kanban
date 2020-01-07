@@ -1,11 +1,18 @@
 <template>
   <div class="board container-fluid">
+    <top />
     <div class="row">
       <div class="col-12">
         <h1>{{board.title}}</h1>
         <p>{{board.description}}</p>
       </div>
-      <list />
+    </div>
+    <div class="row">
+      <div class="col-3" v-for="list in lists" :key="list._id">
+        <list :listData="list" />
+      </div>
+    </div>
+    <div class="row">
       <div class="col-12">
         <form @submit.prevent="addList">
           <input type="text" v-model="newList.title" />
@@ -18,25 +25,29 @@
 
 <script>
 import list from "@/components/List";
+import top from "@/components/Top";
 
 export default {
   name: "board",
   mounted() {
     this.$store.dispatch("setActiveBoard", this.$route.params.boardId);
+    this.$store.dispatch("getLists", this.$route.params.boardId);
   },
   data() {
     return {
       newList: {
-        title: ""
+        title: "",
+        boardId: this.$route.params.boardId
       }
     };
   },
-  method: {
+  methods: {
     addList() {
       let list = { ...this.newList };
       this.$store.dispatch("addList", list);
       this.newList = {
-        title: ""
+        title: "",
+        boardId: this.$route.params.boardId
       };
     }
   },
@@ -50,11 +61,12 @@ export default {
       );
     },
     lists() {
-      return;
+      return this.$store.state.lists;
     }
   },
   components: {
-    list
+    list,
+    top
   },
   props: ["boardId"]
 };
