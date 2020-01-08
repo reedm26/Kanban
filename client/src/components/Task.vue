@@ -7,6 +7,7 @@
 <script>
 export default {
   name: "task",
+
   props: ["taskData"]
 };
 </script>

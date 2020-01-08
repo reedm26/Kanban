@@ -9,7 +9,7 @@
     <div class="card-body" v-for="task in tasks" :key="task.id">
       <task :taskData="task" />
     </div>
-    <modal name="listModal">
+    <modal :name="'listModal' + this.listData.id">
       <form @submit.prevent="addTask">
         <label for="description">Add A Task</label>
         <input
@@ -31,6 +31,9 @@
 import task from "@/components/Task";
 export default {
   name: "list",
+  mounted() {
+    this.$store.dispatch("getTasksByListId", this.listData.id);
+  },
   props: ["listData"],
   data() {
     return {
@@ -42,7 +45,7 @@ export default {
     };
   },
   methods: {
-    addTask() {
+    addTask(id) {
       let task = { ...this.newTask };
       console.log(task);
       this.$store.dispatch("addTask", task);
@@ -53,15 +56,18 @@ export default {
       };
     },
     showModal() {
-      this.$modal.show("listModal");
+      this.$modal.show("listModal" + this.listData.id);
     },
     hideModal() {
-      this.$modal.hide("listModal");
+      this.$modal.hide("listModal" + this.listData.id);
     }
   },
   computed: {
     tasks() {
-      return this.$store.state.tasks;
+      console.log(this.$store.state.tasks);
+      let tasks = this.$store.state.tasks[this.listData.id] || [];
+      console.log(tasks);
+      return tasks;
     }
   },
   components: {
