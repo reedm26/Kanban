@@ -101,6 +101,4 @@ i {
   text-align: start;
   display: inline-block;
 }
-modal {
-}
 </style>
