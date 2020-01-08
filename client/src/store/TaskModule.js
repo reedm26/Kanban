@@ -11,5 +11,14 @@ let api = axios.create({
 });
 
 export default {
-  actions: {}
+  actions: {
+    async getTasksByListId({ commit, dispatch }, id) {
+      let res = await api.get("lists/" + id + "/tasks");
+      commit("setResource", { resource: "tasks", data: res.data });
+    },
+    async addTask({ commit, dispatch }, task) {
+      let res = await api.post("tasks", task);
+      dispatch("getTasksByListId", task.listId);
+    }
+  }
 };
