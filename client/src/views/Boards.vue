@@ -2,13 +2,20 @@
   <div class="boards container-fluid">
     <home-top />
     <div class="row">
-      <div class="col-12"></div>
-      <div class="card mx-auto" v-for="board in boards" :key="board._id">
-        <div class="card-body">
-          <router-link :to="{name: 'board', params: {boardId: board._id}}">
-            <h3>{{board.title}}</h3>
-          </router-link>
-        </div>
+      <div class="col-12">
+        <ol
+          class="list-group list-group-flush"
+          v-for="board in boards"
+          :key="board._id"
+        >
+          <li class="list-group-item text-left">
+            <router-link
+              :to="{ name: 'board', params: { boardId: board._id } }"
+            >
+              <h3 class="">{{ board.title }}</h3>
+            </router-link>
+          </li>
+        </ol>
       </div>
     </div>
   </div>

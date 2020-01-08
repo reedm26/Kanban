@@ -20,6 +20,10 @@ export default {
       console.log(list);
       let res = await api.post("lists", list);
       dispatch("getLists", list.boardId);
+    },
+    async deleteList({ commit, dispatch }, idArr) {
+      let res = await api.delete("lists/" + idArr[0]);
+      dispatch("getLists", idArr[1]);
     }
   }
 };

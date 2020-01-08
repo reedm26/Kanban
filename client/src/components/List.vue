@@ -1,14 +1,19 @@
 <template>
-  <div class="card list" style="width: 18rem;">
+  <div class="card list bg-dark text-light" style="width: 18rem;">
     <div class="card-header">
-      <h5>
+      <h4 class="listTitle">
         {{ listData.title }}
-        <i class="fa fa-plus" @click="showModal"></i>
-      </h5>
+      </h4>
+      <i class="fa fa-plus" @click="showModal"></i>
+      <i @click="deleteList" class="fa fa-close"></i>
     </div>
-    <div class="card-body" v-for="task in tasks" :key="task.id">
+    <ul
+      class="list-group list-group-flush"
+      v-for="task in tasks"
+      :key="task.id"
+    >
       <task :taskData="task" />
-    </div>
+    </ul>
     <modal :name="'listModal' + this.listData.id">
       <form @submit.prevent="addTask">
         <label for="description">Add A Task</label>
@@ -55,6 +60,14 @@ export default {
         boardId: this.listData.boardId
       };
     },
+    deleteList() {
+      if (confirm("Are You Sure You Want To Delete This List?")) {
+        this.$store.dispatch("deleteList", [
+          this.listData.id,
+          this.listData.boardId
+        ]);
+      }
+    },
     showModal() {
       this.$modal.show("listModal" + this.listData.id);
     },
@@ -76,4 +89,18 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+h4 {
+  float: left;
+}
+i {
+  float: right;
+  padding: 7px;
+}
+.listTitle {
+  text-align: start;
+  display: inline-block;
+}
+modal {
+}
+</style>

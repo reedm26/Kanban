@@ -21,6 +21,10 @@ export default {
       let res = await api.post("tasks", task);
       console.log(res.data);
       dispatch("getTasksByListId", task.listId);
+    },
+    async deleteTask({ commit, dispatch }, idArr) {
+      let res = await api.delete("tasks/" + idArr[0]);
+      dispatch("getTasksByListId", idArr[1]);
     }
   }
 };
