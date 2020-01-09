@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-3" v-for="list in lists" :key="list._id">
+      <div class="col-3 m-0.5" v-for="list in lists" :key="list._id">
         <list :listData="list" />
       </div>
     </div>
@@ -48,7 +48,6 @@ export default {
   },
   computed: {
     board() {
-      console.log(this.$store.state.activeBoard);
       return (
         this.$store.state.activeBoard || {
           title: "Loading..."

@@ -1,5 +1,5 @@
 <template>
-  <div class="card list bg-dark text-light" style="width: 18rem;">
+  <div class="card list bg-dark text-light">
     <div class="card-header">
       <h4 class="listTitle">{{ listData.title }}</h4>
       <i @click="deleteList" class="fa fa-close"></i>
@@ -44,7 +44,6 @@ export default {
   methods: {
     addTask(id) {
       let task = { ...this.newTask };
-      console.log(task);
       this.$store.dispatch("addTask", task);
       this.newTask = {
         description: "",
@@ -69,9 +68,7 @@ export default {
   },
   computed: {
     tasks() {
-      console.log(this.$store.state.tasks);
       let tasks = this.$store.state.tasks[this.listData.id] || [];
-      console.log(tasks);
       return tasks;
     },
     lists() {

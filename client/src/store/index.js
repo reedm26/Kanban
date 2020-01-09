@@ -33,10 +33,7 @@ export default new Vuex.Store({
       state.user = user;
     },
     setTasks(state, data) {
-      console.log(data.listId);
       Vue.set(state.tasks, data.listId, data.tasks);
-      console.log(state.tasks);
-      console.log(state.lists);
     }
   },
   actions: {

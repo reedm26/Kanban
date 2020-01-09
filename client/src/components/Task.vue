@@ -39,7 +39,6 @@ export default {
       }
     },
     moveTask(id) {
-      console.log(id);
       this.$store.dispatch("editTask", [
         this.taskData.id,
         this.taskData.listId,
