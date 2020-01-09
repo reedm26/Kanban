@@ -23,7 +23,7 @@ export default new Vuex.Store({
     activeBoard: {},
     lists: [],
     tasks: {},
-    comments: []
+    comments: {}
   },
   mutations: {
     setResource(state, payload) {
@@ -34,6 +34,9 @@ export default new Vuex.Store({
     },
     setTasks(state, data) {
       Vue.set(state.tasks, data.listId, data.tasks);
+    },
+    setComments(state, data) {
+      Vue.set(state.comments, data.taskId, data.comments);
     }
   },
   actions: {

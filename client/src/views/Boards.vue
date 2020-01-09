@@ -2,14 +2,15 @@
   <div class="boards container-fluid">
     <home-top />
     <div class="row">
-      <div class="col-12">
-        <ol class="list-group list-group-flush" v-for="board in boards" :key="board._id">
-          <li class="list-group-item text-left">
+      <div class="col-6">
+        <div class="card bg-dark m-1 text-light" v-for="board in boards" :key="board._id">
+          <div class="card-header text-center">
             <router-link :to="{ name: 'board', params: { boardId: board._id } }">
               <h3 class>{{ board.title }}</h3>
             </router-link>
-          </li>
-        </ol>
+            <i @click="deleteBoard(board._id)" class="fa fa-close"></i>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -30,9 +31,23 @@ export default {
       return this.$store.state.boards;
     }
   },
-  methods: {},
+  methods: {
+    deleteBoard(id) {
+      if (confirm("Are You Sure You Want To Delete This Board?")) {
+        this.$store.dispatch("deleteBoard", id);
+      }
+    }
+  },
   components: {
     homeTop
   }
 };
 </script>
+<style scoped>
+h3 {
+  display: inline-block;
+}
+i {
+  float: right;
+}
+</style>

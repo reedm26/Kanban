@@ -11,5 +11,14 @@ let api = axios.create({
 });
 
 export default {
-  actions: {}
+  actions: {
+    async addComment({ commit, dispatch }, comment) {
+      let res = await api.post("comments", comment);
+      dispatch("getCommentsByTaskId", comment.taskId);
+    },
+    async getCommentsByTaskId({ commit, dispatch }, taskId) {
+      let res = await api.get("tasks/" + taskId + "/comments");
+      commit("setResource", { comments: res.data, taskId: taskId });
+    }
+  }
 };

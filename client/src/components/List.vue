@@ -5,20 +5,27 @@
       <i @click="deleteList" class="fa fa-close"></i>
       <i class="fa fa-plus" @click="showModal"></i>
     </div>
-    <ul class="list-group list-group-flush" v-for="task in tasks" :key="task.id">
+    <ul class="list-group list-group-flush" v-for="(task, i) in tasks" :key="i">
       <task :taskData="task" v-bind="$props" />
     </ul>
-    <modal :name="'listModal' + this.listData.id">
-      <form @submit.prevent="addTask">
-        <label for="description">Add A Task</label>
+    <modalTwo :taskData="task" v-for="task in tasks" :key="task._id" />
+    <modal id="modal" :name="'listModal' + this.listData.id">
+      <form class="text-center" @submit.prevent="addTask">
+        <label for="description">
+          <h4 class="text-dark mt-2">Add A Task</h4>
+        </label>
         <input
+          class="mb-2"
           type="text"
           placeholder="description"
           v-model="newTask.description"
           required
           name="description"
         />
-        <button @click="hideModal" class="btn btn-outline-dark btn-lg">Create Task</button>
+        <button
+          @click="hideModal"
+          class="btn btn-outline-light text-light bg-dark btn-lg"
+        >Create Task</button>
       </form>
     </modal>
   </div>
@@ -26,6 +33,8 @@
 
 <script>
 import task from "@/components/Task";
+import modalTwo from "@/components/Modal";
+
 export default {
   name: "list",
   mounted() {
@@ -64,6 +73,12 @@ export default {
     },
     hideModal() {
       this.$modal.hide("listModal" + this.listData.id);
+    },
+    showCommentModal() {
+      this.$modal.show("commentModal");
+    },
+    hideCommentModal() {
+      this.$modal.hide("commentModal");
     }
   },
   computed: {
@@ -76,12 +91,13 @@ export default {
     }
   },
   components: {
-    task
+    task,
+    modalTwo
   }
 };
 </script>
 
-<style scoped>
+<style>
 h4 {
   float: left;
 }
@@ -92,5 +108,10 @@ i {
 .listTitle {
   text-align: start;
   display: inline-block;
+}
+.v--modal {
+  width: 250px !important;
+  height: 180px !important;
+  left: 43% !important;
 }
 </style>

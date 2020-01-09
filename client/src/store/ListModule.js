@@ -17,7 +17,6 @@ export default {
       commit("setResource", { resource: "lists", data: res.data });
     },
     async addList({ commit, dispatch }, list) {
-      console.log(list);
       let res = await api.post("lists", list);
       dispatch("getLists", list.boardId);
     },

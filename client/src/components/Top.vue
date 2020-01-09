@@ -8,7 +8,7 @@
     </div>
     <div class="col-6">
       <form @submit.prevent="addList">
-        <input type="text" v-model="newList.title" required />
+        <input type="text" placeholder="title..." v-model="newList.title" required />
         <button class="btn btn-outline-light btn-lg">Add List</button>
       </form>
     </div>
