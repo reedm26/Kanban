@@ -25,6 +25,13 @@ export default {
     async deleteTask({ commit, dispatch }, idArr) {
       let res = await api.delete("tasks/" + idArr[0]);
       dispatch("getTasksByListId", idArr[1]);
+    },
+    async editTask({ commit, dispatch }, idArr) {
+      let res = await api.put("lists/" + idArr[1] + "/tasks/" + idArr[0], {
+        listId: idArr[2]
+      });
+      dispatch("getTasksByListId", idArr[1]);
+      dispatch("getTasksByListId", idArr[2]);
     }
   }
 };

@@ -1,18 +1,12 @@
 <template>
   <div class="card list bg-dark text-light" style="width: 18rem;">
     <div class="card-header">
-      <h4 class="listTitle">
-        {{ listData.title }}
-      </h4>
-      <i class="fa fa-plus" @click="showModal"></i>
+      <h4 class="listTitle">{{ listData.title }}</h4>
       <i @click="deleteList" class="fa fa-close"></i>
+      <i class="fa fa-plus" @click="showModal"></i>
     </div>
-    <ul
-      class="list-group list-group-flush"
-      v-for="task in tasks"
-      :key="task.id"
-    >
-      <task :taskData="task" />
+    <ul class="list-group list-group-flush" v-for="task in tasks" :key="task.id">
+      <task :taskData="task" v-bind="$props" />
     </ul>
     <modal :name="'listModal' + this.listData.id">
       <form @submit.prevent="addTask">
@@ -24,9 +18,7 @@
           required
           name="description"
         />
-        <button @click="hideModal" class="btn btn-outline-dark btn-lg">
-          Create Task
-        </button>
+        <button @click="hideModal" class="btn btn-outline-dark btn-lg">Create Task</button>
       </form>
     </modal>
   </div>
@@ -81,6 +73,9 @@ export default {
       let tasks = this.$store.state.tasks[this.listData.id] || [];
       console.log(tasks);
       return tasks;
+    },
+    lists() {
+      return this.$store.state.lists;
     }
   },
   components: {
