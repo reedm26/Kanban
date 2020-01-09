@@ -23,6 +23,10 @@ export default {
     async setActiveBoard({ commit, dispatch }, id) {
       let res = await api.get("boards/" + id);
       commit("setResource", { resource: "activeBoard", data: res.data });
+    },
+    async deleteBoard({ commit, dispatch }, id) {
+      let res = await api.delete("boards/" + id);
+      dispatch("getBoards");
     }
   }
 };

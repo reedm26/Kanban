@@ -3,16 +3,10 @@
     <home-top />
     <div class="row">
       <div class="col-12">
-        <ol
-          class="list-group list-group-flush"
-          v-for="board in boards"
-          :key="board._id"
-        >
+        <ol class="list-group list-group-flush" v-for="board in boards" :key="board._id">
           <li class="list-group-item text-left">
-            <router-link
-              :to="{ name: 'board', params: { boardId: board._id } }"
-            >
-              <h3 class="">{{ board.title }}</h3>
+            <router-link :to="{ name: 'board', params: { boardId: board._id } }">
+              <h3 class>{{ board.title }}</h3>
             </router-link>
           </li>
         </ol>

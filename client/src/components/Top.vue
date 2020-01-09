@@ -4,6 +4,7 @@
       <router-link to="/">
         <button class="btn btn-outline-light btn-lg">Back To The Boards</button>
       </router-link>
+      <button @click="deleteBoard" class="btn btn-outline-light btn-lg">Delete This Board</button>
     </div>
     <div class="col-6">
       <form @submit.prevent="addList">
@@ -33,6 +34,12 @@ export default {
         title: "",
         boardId: this.$route.params.boardId
       };
+    },
+    deleteBoard() {
+      if (confirm("Are You Sure You Want To Delete This Board?")) {
+        this.$store.dispatch("deleteBoard", this.$route.params.boardId);
+        this.$router.replace("/");
+      }
     }
   }
 };
