@@ -6,9 +6,11 @@
       <i class="fa fa-plus" @click="showModal"></i>
     </div>
     <ul class="list-group list-group-flush" v-for="(task, i) in tasks" :key="i">
-      <task :taskData="task" v-bind="$props" />
+      <task :taskData="task" @passed="passTaskId" />
     </ul>
-    <modalTwo :taskData="task" v-for="task in tasks" :key="task._id" />
+
+    <modalTwo id="comment" :taskData="task" v-for="task in tasks" :key="task._id" />
+
     <modal id="modal" :name="'listModal' + this.listData.id">
       <form class="text-center" @submit.prevent="addTask">
         <label for="description">
@@ -47,7 +49,8 @@ export default {
         description: "",
         listId: this.listData.id,
         boardId: this.listData.boardId
-      }
+      },
+      taskId: ""
     };
   },
   methods: {
@@ -75,10 +78,13 @@ export default {
       this.$modal.hide("listModal" + this.listData.id);
     },
     showCommentModal() {
-      this.$modal.show("commentModal");
+      this.$comment.show("commentModal");
     },
     hideCommentModal() {
-      this.$modal.hide("commentModal");
+      this.$comment.hide("commentModal");
+    },
+    passTaskId(taskId) {
+      this.taskId = taskId;
     }
   },
   computed: {
@@ -88,6 +94,9 @@ export default {
     },
     lists() {
       return this.$store.state.lists;
+    },
+    comments() {
+      return this.$store.state.comments[this.taskId] || [];
     }
   },
   components: {

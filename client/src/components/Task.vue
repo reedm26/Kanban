@@ -1,7 +1,7 @@
 <template>
   <li class="task list-group-item text-dark">
     <h5 class>{{ taskData.description }}</h5>
-    <i class="fa fa-plus" data-toggle="modal" :data-target="'#modalComment'+taskData.id"></i>
+    <i class="fa fa-plus" data-toggle="modal" @click="passTaskData" data-target="#comment"></i>
 
     <div class="dropdown">
       <button
@@ -23,34 +23,6 @@
         >{{list.title}}</a>
       </div>
     </div>
-    <!-- <modalTwo :id="taskData.id" /> -->
-    <!-- <div class="modal" :id="'modalComment'+taskData.id" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
-          </div>
-        </div>
-      </div>
-    </div>-->
-    <!--<modal :name="'commentModal' + this.taskData.id">
-      <h4 class>{{ taskData.description }}</h4>
-      <div v-for="comment in comments" :key="comment.id">
-        <comment :commentData="comment" />
-      </div>
-      <form @submit.prevent="addComment">
-        <input type="text" placeholder="add Comment..." v-model="newComment.content" />
-        <button class="btn btn-secondary btn-sm">Add</button>
-      </form>
-    </modal>-->
   </li>
 </template>
 
@@ -60,6 +32,7 @@ import modalTwo from "@/components/Modal";
 
 export default {
   name: "task",
+  mounted() {},
   data() {
     return {
       newComment: {
@@ -99,6 +72,9 @@ export default {
     },
     hideCommentModal() {
       this.$modal.hide("commentModal" + this.taskData.id);
+    },
+    passTaskData() {
+      this.$emit("passed", this.taskData.id);
     }
   },
   computed: {

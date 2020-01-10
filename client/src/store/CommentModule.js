@@ -18,7 +18,7 @@ export default {
     },
     async getCommentsByTaskId({ commit, dispatch }, taskId) {
       let res = await api.get("tasks/" + taskId + "/comments");
-      commit("setResource", { comments: res.data, taskId: taskId });
+      commit("setComments", { comments: res.data, taskId: taskId });
     }
   }
 };

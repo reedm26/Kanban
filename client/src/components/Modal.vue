@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" :id="'modalComment'+taskData.id" tabindex="-1" role="dialog">
+  <div class="modal" :id="id" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,12 +8,13 @@
             <span>&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <comment v-for="comment in comments" :key="comment.id" />
+        <div class="modal-body text-dark">
+          <div>
+            <comment :taskId="taskData.id" />
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
         </div>
       </div>
     </div>
@@ -32,10 +33,10 @@ export default {
   data() {
     return {};
   },
-  props: ["taskData"],
+  props: ["taskData", "id"],
   computed: {
     comments() {
-      return this.$store.state.comments;
+      return this.$store.state.comments[this.taskData.id] || [];
     }
   },
   methods: {},
