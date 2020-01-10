@@ -9,7 +9,7 @@
       <task :taskData="task" @passed="passTaskId" />
     </ul>
 
-    <modalTwo id="comment" :taskData="task" v-for="task in tasks" :key="task._id" />
+    <modalTwo :id="'modal' + task.id" :taskData="task" v-for="task in tasks" :key="task._id" />
 
     <modal id="modal" :name="'listModal' + this.listData.id">
       <form class="text-center" @submit.prevent="addTask">

@@ -1,7 +1,12 @@
 <template>
   <li class="task list-group-item text-dark">
     <h5 class>{{ taskData.description }}</h5>
-    <i class="fa fa-plus" data-toggle="modal" @click="passTaskData" data-target="#comment"></i>
+    <i
+      class="fa fa-plus"
+      data-toggle="modal"
+      @click="passTaskData"
+      :data-target="'#modal' + taskData.id"
+    ></i>
 
     <div class="dropdown">
       <button
