@@ -1,11 +1,17 @@
 <template>
   <div class="comment">
-    hello
+    <div class="text-left" v-for="comment in comments" :key="comment.id">
+      <ul>
+        <li>
+          {{comment.content}}
+          <i @click="deleteComment(comment.id)" class="fa fa-close"></i>
+        </li>
+      </ul>
+    </div>
     <form @submit.prevent="addComment">
       <input type="text" placeholder="Add Comment..." v-model="newComment.content" />
-      <button class="btn btn-outline-dark btn-sm">Add</button>
+      <button class="btn btn-outline-dark text-light bg-dark btn-sm">Add</button>
     </form>
-    <div v-for="comment in comments" :key="comment.id">{{comment.content}}</div>
   </div>
 </template>
 
@@ -24,7 +30,7 @@ export default {
     this.$store.dispatch("getCommentsByTaskId", this.taskId);
     console.log(this.taskId);
   },
-  props: ["taskId"],
+  props: ["taskId", "commentData"],
   computed: {
     comments() {
       return this.$store.state.comments[this.taskId] || [];
@@ -38,6 +44,12 @@ export default {
         content: "",
         taskId: this.taskId
       };
+    },
+    deleteComment(id) {
+      if (confirm("Are You Sure You Want To Delete This Comment?")) {
+        console.log(id);
+        this.$store.dispatch("deleteComment", [id, this.taskId]);
+      }
     }
   }
 };

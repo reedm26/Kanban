@@ -19,6 +19,10 @@ export default {
     async getCommentsByTaskId({ commit, dispatch }, taskId) {
       let res = await api.get("tasks/" + taskId + "/comments");
       commit("setComments", { comments: res.data, taskId: taskId });
+    },
+    async deleteComment({ commit, dispatch }, idArr) {
+      let res = await api.delete("comments/" + idArr[0]);
+      dispatch("getCommentsByTaskId", idArr[1]);
     }
   }
 };
