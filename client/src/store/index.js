@@ -37,8 +37,17 @@ export default new Vuex.Store({
     },
     setComments(state, data) {
       Vue.set(state.comments, data.taskId, data.comments);
+    },
+    resetState(state) {
+      (state.user = {}),
+        (state.boards = []),
+        (state.activeBoard = {}),
+        (state.lists = []),
+        (state.tasks = {}),
+        (state.comments = {});
     }
   },
+
   actions: {
     //#region -- AUTH STUFF --
     async register({ commit, dispatch }, creds) {

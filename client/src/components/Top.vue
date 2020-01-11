@@ -11,6 +11,9 @@
         <input type="text" placeholder="title..." v-model="newList.title" required />
         <button class="btn btn-outline-light btn-lg">Add List</button>
       </form>
+      <router-link to="/login">
+        <button @click="resetUser" class="btn btn-outline-light btn-lg">Logout</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -40,6 +43,9 @@ export default {
         this.$store.dispatch("deleteBoard", this.$route.params.boardId);
         this.$router.replace("/");
       }
+    },
+    resetUser() {
+      this.$store.dispatch("logout");
     }
   }
 };
