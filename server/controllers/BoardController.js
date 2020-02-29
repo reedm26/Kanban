@@ -8,7 +8,7 @@ export default class BoardController {
   constructor() {
     this.router = express
       .Router()
-      .use(Authorize.authenticated)
+      // .use(Authorize.authenticated)
       .get("", this.getAll)
       .get("/:id", this.getById)
       .get("/:id/lists", this.getListsByBoardId)

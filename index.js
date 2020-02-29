@@ -1,3 +1,3 @@
-require(dotenv).config({ path: "../.env" });
+require("dotenv").config();
 require = require("esm")(module);
 module.exports = require("./server/main");

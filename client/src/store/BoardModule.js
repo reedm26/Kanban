@@ -1,8 +1,8 @@
 import axios from "axios";
 
-let base = window.location.host.includes("localhost:8080")
+let base = window.location.host.includes("localhost")
   ? "//localhost:3000/"
-  : "/";
+  : "";
 
 let api = axios.create({
   baseURL: base + "api/",
