@@ -5,9 +5,11 @@
     </div>
     <div class="col-6">
       <form @submit.prevent="addBoard">
-        <input type="text" placeholder="title" v-model="newBoard.title" required />
-        <input type="text" placeholder="description" v-model="newBoard.description" required />
-        <button class="btn btn-outline-light btn-lg" type="submit">Create Board</button>
+        <!-- <input type="text" placeholder="title" v-model="newBoard.title" required /> -->
+        <!-- <input type="text" placeholder="description" v-model="newBoard.description" required /> -->
+        <button class="btn btn-outline-light btn-lg" type="submit">
+          Create Board
+        </button>
       </form>
     </div>
   </div>
@@ -20,18 +22,17 @@ export default {
     return {
       newBoard: {
         title: "",
-        description: ""
-      }
+        description: "",
+      },
     };
   },
   methods: {
     addBoard() {
       this.$store.dispatch("addBoard", this.newBoard);
       this.newBoard = { title: "", description: "" };
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
